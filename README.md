@@ -1,1 +1,5 @@
-# Back
+# Domain
+```
+$ npm install
+$ npm start
+```
