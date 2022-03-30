@@ -17,16 +17,15 @@ export class CalendarEINARepository {
         const daysEINA = calendar.getDays();
         const iniCourseYear = calendar.iniYear;
         const period = calendar.period;
+
         daysEINA.forEach(async day => {
-            console.log('       -           -            -           -' + JSON.stringify(day))
-
             let dayEINA = { date: this.onlyDate(day.date), state: day.state, weekDay: day.weekDay, weekLetter: day.weekLetter, comment: day.comment, iniCourseYear: iniCourseYear, period: period };
-            console.log('       -           -            -           -||||||||||  ' + JSON.stringify(dayEINA))
-
             await this.createDiaEINA(dayEINA);
         });
+
         return calendar;
     }
+
     async findByIniYearAndPeriod(year: number, period: CalendarEINAPeriod): Promise<CalendarEINA> {
         let daysEINA = await this.dayEINAModel.findAll({
             where: {
@@ -36,25 +35,19 @@ export class CalendarEINARepository {
             order: ['date']
         });
 
-        //console.log("      Sending    DAYSEINA   " + JSON.stringify(daysEINA))
-
-
         let arrayEINA: Array<DayEINA> = daysEINA.map(day => {
             return new DayEINA({ date: new Date(day.date), state: DayEINAState[day.state], weekDay: day.weekDay, weekLetter: WeekLetter [ day.weekLetter], comment: day.comment});
         })
-       // console.log("SendingArray    " + JSON.stringify(arrayEINA))
 
         var calendar = new CalendarEINA(year, period);
         calendar.setDays(arrayEINA)
         return calendar;
     }
 
-    private convertDayEINA(calendar: CalendarEINA) {
-
-    }
     private onlyDate(date: Date) {
         return new Date(date).toISOString().slice(0, 10);
     }
+
     async edit(dayEINA: DayEINA): Promise<boolean> {
         await this.dayEINAModel.update(
             {
@@ -64,7 +57,9 @@ export class CalendarEINARepository {
                 comment: dayEINA.comment
             },
             { where: { date: this.onlyDate(dayEINA.date) } }
-        );
+        ).catch(err => {
+             console.log(err)
+        });
         
         return true;
     }

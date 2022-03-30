@@ -18,4 +18,4 @@ export abstract class ValueObject<T> {
         return JSON.stringify(this) === JSON.stringify(vo);
     }
 
-}
+}  

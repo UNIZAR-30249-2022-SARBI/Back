@@ -14,12 +14,6 @@ var startSecondConvocatory = new Date('2022-02-06');
 var endSecondConvocatory = new Date('2022-02-06');*/
 
 var factory = new CalendarEINAFactory();
-/*var calendar = factory.create(startFirstSemester, endFirstSemester,
-    startSecondSemester, endSecondSemester,
-    startSecondConvocatory, endSecondConvocatory);
-
-console.log(JSON.stringify("              "+JSON.stringify(calendar.getDays())));*/
 var calendar = factory.create(0, startSecondSemester, endSecondSemester, 2021);
 
-/*var dayEINA = { date: new Date, weekDay: WeekDayNumber.get(dayData.day), weekLetter: dayData.week?.toUpperCase(), state: dayData.type, comment: [dayData.comment]; }*/
 
