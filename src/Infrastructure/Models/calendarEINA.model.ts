@@ -32,7 +32,7 @@ export class CalendarEINAModel extends Model {
     startSecondConvocatory;
 
     @Column({ type: DataType.DATEONLY })
-    endSecondConvocatory;
+    endSecondConvocatory; 
 
     @HasMany(() => DayEINAModel, CALENDAREINA_ID)
     daysEINA: DayEINAModel[];

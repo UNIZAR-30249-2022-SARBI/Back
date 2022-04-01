@@ -12,7 +12,7 @@ export class EditCalendarEINAService {
     public async editDayEINA(props: DayEINAProps, course:string, version:number): Promise<Boolean> {
         let dayEINA = new DayEINA(props);
         let calendar: CalendarEINA = await this.calendarEINARepository.findByCourseAndVersion(course, version);
-        this.calendarEINARepository.editDayEINA(dayEINA, calendar);
+        this.calendarEINARepository.saveDayInCalendar(dayEINA, calendar);
         return true;
     }
 

@@ -6,8 +6,6 @@ import { addWeek, dateBetween, getUTCDate, sortByDate, TOTALWEEKDAY } from "./da
 const CULM_COMMENT = 'Exámenes CULM';
 const SEC_CONV_COMMENT = 'Exámenes 2ª conv';
 
-
-
 export enum CalendarEINAPeriod {
     FIRST_QUARTER = 0,
     SECOND_QUARTER = 1,
@@ -38,14 +36,22 @@ export class CalendarEINA {
         return this._course;
     }
 
-    get period(): PeriodsCalendarEINA {
-        return this._period;
-    }
-
     get version(): number {
         return this._version;
     }
 
+    get period(): PeriodsCalendarEINA {
+        return this._period;
+    }
+
+    get days(): Array<DayEINA> {
+        return this._days;
+    }
+
+    set days(days: Array<DayEINA>) {
+        this._days = days;
+    }
+    
     private checkValidCourse(course: string) {
         let pattern = /\d{2}(\d{2})-(\d{2})/;
         let match = course.match(pattern);
@@ -53,20 +59,6 @@ export class CalendarEINA {
         if (match === null || match?.length < 3 || Number(match[2]) != ((Number(match[1]) + 1) % 100))
             //throw new error;
             console.error("Invalid CalendarEINA course", course);
-    }
-
-    public updateDay(newDay: DayEINA) {
-        const date = this.days.findIndex(day => day.date == newDay.date);
-        this.days.splice(date, 1);
-        this.days.push(newDay);
-    }
-
-    set days(days: Array<DayEINA>) {
-        this._days = days;
-    }
-
-    get days(): Array<DayEINA> {
-        return this._days;
     }
 
     public fillDaysEINA() {
@@ -95,10 +87,10 @@ export class CalendarEINA {
         return days;
     }
 
-
     private filterDays(start: Date, end: Date) {
         return this._days.filter(day => dateBetween(day.date, start, end));
     }
+
     private daySemester(startSemesterDate: Date, endSemesterDate: Date): Array<DayEINA> {
         var startSemester = getUTCDate(startSemesterDate), endSemester = getUTCDate(endSemesterDate);
         var daysEINA = this.fillSchoolWeekDaysEINA(startSemester, WeekLetter.BOTH);
@@ -169,6 +161,12 @@ export class CalendarEINA {
         let date = getUTCDate(lastDate);
         date.setDate(date.getDate() + 1);
         return date;
+    }
+
+    private updateDay(newDay: DayEINA) {
+        const date = this.days.findIndex(day => day.date == newDay.date);
+        this.days.splice(date, 1);
+        this.days.push(newDay);
     }
 
 }

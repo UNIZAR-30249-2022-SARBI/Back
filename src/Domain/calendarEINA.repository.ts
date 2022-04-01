@@ -90,7 +90,7 @@ export class CalendarEINARepository {
         return new Date(date).toISOString().slice(0, 10);
     }
 
-    async editDayEINA(dayEINA: DayEINA, calendar: CalendarEINA): Promise<boolean> {
+    async saveDayInCalendar(dayEINA: DayEINA, calendar: CalendarEINA): Promise<boolean> {
         await this.dayEINAModel.update(
             {
                 weekDay: dayEINA.weekDay,
