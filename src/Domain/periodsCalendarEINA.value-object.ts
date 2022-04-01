@@ -1,6 +1,5 @@
-import { dateIsBefore } from '../../Shared/checkDate';
-import { ValueObject } from '../../Shared/value-object'
-
+import { dateIsBefore } from './dateUtils';
+import { ValueObject } from './value-object'
 
 export type PeriodsCalendarEINAProps = {
     startFirstSemester: Date, endFirstSemester: Date, startSecondSemester: Date,

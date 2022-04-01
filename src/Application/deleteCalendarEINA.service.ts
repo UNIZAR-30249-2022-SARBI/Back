@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CalendarEINARepository } from "../../Domain/CalendarEINA/calendarEINA.repository";
-import { CalendarEINA } from "../../Domain/CalendarEINA/calendarEINA.entity";
+import { CalendarEINARepository } from "../Domain/calendarEINA.repository";
+import { CalendarEINA } from "../Domain/calendarEINA.entity";
 
 @Injectable()
 export class DeleteCalendarEINAService {

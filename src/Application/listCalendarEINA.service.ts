@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { CalendarEINARepository } from "../../Domain/CalendarEINA/calendarEINA.repository";
-import { CalendarEINAPeriod } from "../../Domain/CalendarEINA/calendarEINA.entity";
-import { DayEINA } from '../../Domain/CalendarEINA/dayEINA.value-object';
+import { CalendarEINARepository } from "../Domain/calendarEINA.repository";
+import { CalendarEINAPeriod } from "../Domain/calendarEINA.entity";
+import { DayEINA } from '../Domain/dayEINA.value-object';
 
 @Injectable()
 export class ListCalendarEINAService {

@@ -1,10 +1,11 @@
 import { PeriodsCalendarEINA } from "./periodsCalendarEINA.value-object";
-import { DayEINA, DayEINAProps, DayEINAState, WeekDay, WeekLetter } from './dayEINA.value-object';
+import { DayEINA, DayEINAState, WeekDay, WeekLetter } from './dayEINA.value-object';
+import { v4 as uuidV4 } from 'uuid';
+import { addWeek, dateBetween, getUTCDate, sortByDate, TOTALWEEKDAY } from "./dateUtils";
 
 const CULM_COMMENT = 'Exámenes CULM';
 const SEC_CONV_COMMENT = 'Exámenes 2ª conv';
-import { v4 as uuidV4 } from 'uuid';
-import { addWeek, dateBetween, getUTCDate, sortByDate, TOTALWEEKDAY } from "../../Shared/checkDate";
+
 
 
 export enum CalendarEINAPeriod {

@@ -1,10 +1,10 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { Injectable } from "@nestjs/common";
-import { CalendarEINA } from "./calendarEINA.entity";
+import { DayEINAModel } from "../Infrastructure/Models/dayEINA.model";
+import { CalendarEINAModel } from "../Infrastructure/Models/calendarEINA.model";
 import { DayEINA, DayEINAState, WeekLetter } from "./dayEINA.value-object";
-import { DayEINAModel } from "./dayEINA.model";
-import { CalendarEINAModel } from "./calendarEINA.model";
 import { PeriodsCalendarEINA } from "./periodsCalendarEINA.value-object";
+import { CalendarEINA } from "./calendarEINA.entity";
 
 export type DayEINAData = { date: string, state: string, weekDay: number, weekLetter: string, idCalendarEINA };
 

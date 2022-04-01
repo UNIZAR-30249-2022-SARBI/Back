@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { CalendarEINAModule } from './Application/Controller/calendarEINA.module';
-import { DayEINAModel } from "./Domain/CalendarEINA/dayEINA.model";
-import { CalendarEINAModel } from './Domain/CalendarEINA/calendarEINA.model';
+import { CalendarEINAModule } from './calendarEINA.module';
+import { DayEINAModel } from "./Infrastructure/Models/dayEINA.model";
+import { CalendarEINAModel } from './Infrastructure/Models/calendarEINA.model';
 
 @Module({
     imports: [SequelizeModule.forRoot({
@@ -19,8 +19,8 @@ import { CalendarEINAModel } from './Domain/CalendarEINA/calendarEINA.model';
         synchronize: true,
         define: { timestamps: false },
     }), CalendarEINAModule],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [],
+    providers: [],
 })
 
 export class AppModule {}

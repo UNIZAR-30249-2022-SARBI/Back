@@ -3,12 +3,14 @@
     "",
     "\\src",
     "\\src\\Application",
-    "\\src\\Application\\Controller",
-    "\\src\\Application\\UseCases",
+    "\\src\\Application\\Controllers",
+    "\\src\\Application\\Services",
     "\\src\\Domain",
     "\\src\\Domain\\CalendarEINA",
+    "\\src\\Infraestructure",
+    "\\src\\Infraestructure\\Controllers",
     "\\src\\Shared"
   ],
-  "SelectedNode": "\\src\\Domain\\CalendarEINA\\calendarEINA.entity.ts",
+  "SelectedNode": "\\src\\Infraestructure\\Controllers\\calendarEINA.controller.ts",
   "PreviewInSolutionExplorer": false
 }

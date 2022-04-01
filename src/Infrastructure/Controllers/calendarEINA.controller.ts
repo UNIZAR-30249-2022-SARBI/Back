@@ -5,11 +5,11 @@ import {
     Ctx,
     Payload,
 } from '@nestjs/microservices';
-import { EditCalendarEINAService } from "../UseCases/editCalendarEINA.service";
-import { CreateCalendarEINAService } from "../UseCases/createCalendarEINA.service";
-import { ListCalendarEINAService } from "../UseCases/listCalendarEINA.service";
-import { DayEINA, DayEINAProps } from "../../Domain/CalendarEINA/dayEINA.value-object";
-import { DeleteCalendarEINAService } from "../UseCases/deleteCalendarEINA.service";
+import { EditCalendarEINAService } from "../../Application/editCalendarEINA.service";
+import { CreateCalendarEINAService } from "../../Application/createCalendarEINA.service";
+import { ListCalendarEINAService } from "../../Application/listCalendarEINA.service";
+import { DayEINA, DayEINAProps } from "../../Domain/dayEINA.value-object";
+import { DeleteCalendarEINAService } from "../../Application/deleteCalendarEINA.service";
 
 @Controller()
 export class CalendarEINAController {

@@ -1,4 +1,4 @@
-import {ValueObject} from '../../Shared/value-object'
+import {ValueObject} from './value-object'
 
 export enum DayEINAState {
     FESTIVE = "FESTIVE",
