@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CalendarEINAModule } from './Application/Controller/calendarEINA.module';
 import { DayEINAModel } from "./Domain/CalendarEINA/dayEINA.model";
+import { CalendarEINAModel } from './Domain/CalendarEINA/calendarEINA.model';
 
 @Module({
     imports: [SequelizeModule.forRoot({
@@ -13,10 +14,10 @@ import { DayEINAModel } from "./Domain/CalendarEINA/dayEINA.model";
         username: 'postgres',
         password: 'admin779799',
         database: 'gicuz',
-        models: [DayEINAModel],
+        models: [DayEINAModel, CalendarEINAModel],
         autoLoadModels: true,
         synchronize: true,
-        define: {timestamps: false}
+        define: { timestamps: false },
     }), CalendarEINAModule],
     controllers: [AppController],
     providers: [AppService],

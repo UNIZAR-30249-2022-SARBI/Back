@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\calendarEINA"
+    "\\src\\Application",
+    "\\src\\Application\\Controller",
+    "\\src\\Application\\UseCases",
+    "\\src\\Domain",
+    "\\src\\Domain\\CalendarEINA",
+    "\\src\\Shared"
   ],
-  "SelectedNode": "\\src\\calendarEINA\\dayEINA.model.ts",
+  "SelectedNode": "\\src\\Domain\\CalendarEINA\\calendarEINA.entity.ts",
   "PreviewInSolutionExplorer": false
 }

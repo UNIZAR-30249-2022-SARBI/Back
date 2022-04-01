@@ -1,36 +1,54 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { Injectable } from "@nestjs/common";
-
-import { CalendarEINA, CalendarEINAPeriod } from "./calendarEINA.entity";
+import { CalendarEINA } from "./calendarEINA.entity";
 import { DayEINA, DayEINAState, WeekLetter } from "./dayEINA.value-object";
 import { DayEINAModel } from "./dayEINA.model";
+import { CalendarEINAModel } from "./calendarEINA.model";
+import { PeriodsCalendarEINA } from "./periodsCalendarEINA.value-object";
 
-export type DayEINAData = { date: string, state: string, weekDay: number, weekLetter: string, comment:string[], iniCourseYear:number; };
+export type DayEINAData = { date: string, state: string, weekDay: number, weekLetter: string, idCalendarEINA };
 
 @Injectable()
 export class CalendarEINARepository {
     constructor(
         @InjectModel(DayEINAModel)
-        private dayEINAModel: typeof DayEINAModel
+        private dayEINAModel: typeof DayEINAModel,
+        @InjectModel(CalendarEINAModel)
+        private calendarEINAModel: typeof CalendarEINAModel
     ) { }
-    async add(calendar: CalendarEINA): Promise<CalendarEINA> {
-        const daysEINA = calendar.getDays();
-        const iniCourseYear = calendar.iniYear;
-        const period = calendar.period;
+
+    async save(calendar: CalendarEINA): Promise<CalendarEINA> {
+        const idCalendarEINA = (await this.createCalendarEINA(calendar)).id;
+        const daysEINA = calendar.days;
 
         daysEINA.forEach(async day => {
-            let dayEINA = { date: this.onlyDate(day.date), state: day.state, weekDay: day.weekDay, weekLetter: day.weekLetter, comment: day.comment, iniCourseYear: iniCourseYear, period: period };
+            let dayEINA = { date: this.onlyDate(day.date), state: day.state, weekDay: day.weekDay, weekLetter: day.weekLetter, comment: day.comment, idCalendarEINA: idCalendarEINA };
             await this.createDiaEINA(dayEINA);
         });
-
         return calendar;
     }
 
-    async findByIniYearAndPeriod(year: number, period: CalendarEINAPeriod): Promise<CalendarEINA> {
+    private async createCalendarEINA(calendar: CalendarEINA): Promise<CalendarEINAModel | null> {
+        let period = calendar.period.props;
+        const newCalendar = this.calendarEINAModel.create(
+            {
+                id: calendar.id,
+                course: calendar.course, version: calendar.version,
+                startFirstSemester: period.startFirstSemester,
+                endFirstSemester: period.endFirstSemester,
+                startSecondSemester: period.startSecondSemester,
+                endSecondSemester: period.endSecondSemester,
+                startSecondConvocatory: period.startSecondConvocatory,
+                endSecondConvocatory: period.endSecondConvocatory
+            }
+        ).catch(err => { console.log(err); return null; });
+        return newCalendar;
+    }
+
+    async findDaysByCalendarEINA(calendar: CalendarEINA): Promise<Array<DayEINA>> {
         let daysEINA = await this.dayEINAModel.findAll({
             where: {
-                iniCourseYear: year,
-                period: period,
+                idCalendarEINA: calendar.id
             },
             order: ['date']
         });
@@ -39,8 +57,32 @@ export class CalendarEINARepository {
             return new DayEINA({ date: new Date(day.date), state: DayEINAState[day.state], weekDay: day.weekDay, weekLetter: WeekLetter [ day.weekLetter], comment: day.comment});
         })
 
-        var calendar = new CalendarEINA(year, period);
-        calendar.setDays(arrayEINA)
+        return arrayEINA;
+    }
+
+    async findByCourseAndVersion(course: string, version: number): Promise<CalendarEINA> {
+        let calendarEINA = await this.calendarEINAModel.findOne({
+            where: {
+                course: course,
+                version: version
+            },
+        }).catch(err => { console.log(err); return null; });
+
+        if (calendarEINA===null) {
+            console.log("NOT FOUND");
+            return null; 
+        }
+            
+        let period: PeriodsCalendarEINA = new PeriodsCalendarEINA({
+            startFirstSemester: calendarEINA.startFirstSemester,
+            endFirstSemester: calendarEINA.endFirstSemester,
+            startSecondSemester: calendarEINA.startSecondSemester,
+            endSecondSemester: calendarEINA.endSecondSemester,
+            startSecondConvocatory: calendarEINA.startSecondConvocatory,
+            endSecondConvocatory: calendarEINA.endSecondConvocatory
+        });
+
+        var calendar = new CalendarEINA(calendarEINA.id, calendarEINA.course, calendarEINA.version, period);
         return calendar;
     }
 
@@ -48,30 +90,36 @@ export class CalendarEINARepository {
         return new Date(date).toISOString().slice(0, 10);
     }
 
-    async edit(dayEINA: DayEINA): Promise<boolean> {
+    async editDayEINA(dayEINA: DayEINA, calendar: CalendarEINA): Promise<boolean> {
         await this.dayEINAModel.update(
             {
                 weekDay: dayEINA.weekDay,
                 weekLetter: dayEINA.weekLetter,
                 state: dayEINA.state,
-                comment: dayEINA.comment
+                comment: dayEINA.comment,
+                idCalendarEINA: calendar.id
             },
             { where: { date: this.onlyDate(dayEINA.date) } }
         ).catch(err => {
              console.log(err)
         });
-        
         return true;
     }
     
-    async delete(year: number): Promise<Boolean> {
+    async deleteCalendarEINA(calendar: CalendarEINA): Promise<Boolean> {
+        const id = calendar.id;
         await this.dayEINAModel.destroy(
             {
                 where: {
-                    iniCourseYear: year,
+                    idCalendarEINA: id,
                 }
             }
         );
+        await this.calendarEINAModel.destroy(
+            {
+                where: { id: id}
+            }
+        )
         return true;
     }
 

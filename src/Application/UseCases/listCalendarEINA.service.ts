@@ -9,9 +9,17 @@ export class ListCalendarEINAService {
         private calendarEINARepository: CalendarEINARepository
     ) { }
 
-    public async listCalendarEINA(iniCourseYear: number, period: CalendarEINAPeriod): Promise<Array<DayEINA>> {
-        var calendar = await this.calendarEINARepository.findByIniYearAndPeriod(iniCourseYear, period);
-        return calendar.getDays();
+    public async listCalendarEINA(course: string, version: number, period: CalendarEINAPeriod): Promise<Array<DayEINA>> {
+        var calendar = await this.calendarEINARepository.findByCourseAndVersion(course, version);
+        var daysEINA = new Array<DayEINA>();
+
+        if (calendar) {
+            daysEINA = await this.calendarEINARepository.findDaysByCalendarEINA(calendar);
+            calendar.days = daysEINA;
+            daysEINA = calendar.getDaysOfPeriod(period)
+        }
+
+        return daysEINA;
     }
 
 }

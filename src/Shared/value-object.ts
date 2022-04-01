@@ -8,6 +8,11 @@ export abstract class ValueObject<T> {
 
     protected abstract validate(props: T): void;
 
+    get props(): T {
+        return this._props;
+    }
+
+
     /**
      *  Check if two Value Objects are equal. Checks structural equality.
      */

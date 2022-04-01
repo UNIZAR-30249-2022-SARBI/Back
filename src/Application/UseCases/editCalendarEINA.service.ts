@@ -11,9 +11,10 @@ export class EditCalendarEINAService {
         private calendarEINARepository: CalendarEINARepository
     ) { }
 
-    public async editDayEINA(props: DayEINAProps): Promise<Boolean> {
+    public async editDayEINA(props: DayEINAProps, course:string, version:number): Promise<Boolean> {
         let dayEINA = new DayEINA(props);
-        this.calendarEINARepository.edit(dayEINA);
+        let calendar: CalendarEINA = await this.calendarEINARepository.findByCourseAndVersion(course, version);
+        this.calendarEINARepository.editDayEINA(dayEINA, calendar);
         return true;
     }
 

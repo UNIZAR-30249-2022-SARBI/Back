@@ -1,26 +1,28 @@
-import { Column, Model, PrimaryKey, Table, Unique, DataType } from "sequelize-typescript";
+import { Column, Model, PrimaryKey, Table, Unique, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { CalendarEINAModel, CALENDAREINA_ID } from "./calendarEINA.model";
 
 @Table
 export class DayEINAModel extends Model {
-    @PrimaryKey
-    @Column({type: DataType.DATEONLY})
-    date: string;
+    @Column({ type: DataType.DATEONLY })
+    date;
 
     @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: false })
     comment: string[];
 
-    @Column({ defaultValue: ['NO_SCHOOL'] })
-    state: string
+    @Column
+    state: string;
 
     @Column
     weekDay: number;
 
-    @Column({ defaultValue: '' })
+    @Column
     weekLetter: string;
 
-    @Column
-    iniCourseYear: number;
+    @BelongsTo(() => CalendarEINAModel, CALENDAREINA_ID)
+    calendar;
 
-    @Column
-    period:number
+    @ForeignKey(() => CalendarEINAModel)
+    @Column({ type: DataType.UUID })
+    idCalendarEINA;
 }
+
