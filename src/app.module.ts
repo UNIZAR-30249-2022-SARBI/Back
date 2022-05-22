@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CalendarEINAModule } from './calendarEINA.module';
 import { DayEINAModel } from "./Infrastructure/Models/dayEINA.model";
 import { CalendarEINAModel } from './Infrastructure/Models/calendarEINA.model';
+import { PeriodModel } from './Infrastructure/Models/periods.model';
 
 @Module({
     imports: [SequelizeModule.forRoot({
@@ -14,10 +13,11 @@ import { CalendarEINAModel } from './Infrastructure/Models/calendarEINA.model';
         username: 'postgres',
         password: 'admin779799',
         database: 'gicuz',
-        models: [DayEINAModel, CalendarEINAModel],
+        models: [DayEINAModel, CalendarEINAModel, PeriodModel],
         autoLoadModels: true,
         synchronize: true,
         define: { timestamps: false },
+        logging: true
     }), CalendarEINAModule],
     controllers: [],
     providers: [],

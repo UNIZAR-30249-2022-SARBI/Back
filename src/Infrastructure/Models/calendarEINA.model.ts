@@ -1,5 +1,6 @@
 import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany } from "sequelize-typescript";
 import { DayEINAModel } from "./dayEINA.model";
+import { PeriodModel } from "./periods.model";
 
 const COURSE_VERSION_CONSTRAINT = 'course_version';
 export const CALENDAREINA_ID = 'idCalendarEINA';
@@ -16,7 +17,7 @@ export class CalendarEINAModel extends Model {
     @Column({ unique: COURSE_VERSION_CONSTRAINT})
     version: number;
 
-    @Column({ type: DataType.DATEONLY })
+ /*   @Column({ type: DataType.DATEONLY })
     startFirstSemester;
 
     @Column({ type: DataType.DATEONLY })
@@ -32,8 +33,10 @@ export class CalendarEINAModel extends Model {
     startSecondConvocatory;
 
     @Column({ type: DataType.DATEONLY })
-    endSecondConvocatory; 
+    endSecondConvocatory; */
 
     @HasMany(() => DayEINAModel, CALENDAREINA_ID)
     daysEINA: DayEINAModel[];
+    @HasMany(() => PeriodModel, CALENDAREINA_ID)
+    periods: PeriodModel[];
 }

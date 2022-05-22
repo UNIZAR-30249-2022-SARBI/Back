@@ -10,8 +10,11 @@ export class DeleteCalendarEINAService {
 
     public async deleteCalendarEINA(course: string, version: number): Promise<Boolean> {
         let calendar: CalendarEINA = await this.calendarEINARepository.findByCourseAndVersion(course, version);
-        this.calendarEINARepository.deleteCalendarEINA(calendar);
-        return true;
+        if (calendar) {
+            this.calendarEINARepository.deleteCalendarEINA(calendar);
+            return true;
+        } else 
+            return false;
     }
 
 }
