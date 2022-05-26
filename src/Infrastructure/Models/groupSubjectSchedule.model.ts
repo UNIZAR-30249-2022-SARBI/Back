@@ -12,9 +12,12 @@ export class GroupSubjectScheduleModel extends Model {
 
     @Column
     groupType: string;
+
+    @Column
+    groupNumber: number;
     
     @HasOne(() => TeachingGroupModel)
-    teachingGroup: number;
+    teachingGroup: TeachingGroupModel;
 
     @HasMany(() => ScheduleSlotModel, GROUPSUBJECTSCHEDULE_ID)
     scheduleSlots: ScheduleSlotModel[];
