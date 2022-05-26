@@ -3,9 +3,6 @@ import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany } from "seq
 const GROUP_CODE_CONSTRAINT = 'group_code'
 @Table
 export class TeachingGroupModel extends Model {
-    @PrimaryKey
-    @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4 })
-    id;
 
     @Column
     career: string;

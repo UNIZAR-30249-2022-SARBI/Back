@@ -24,6 +24,6 @@ export class Subject {
     }
 
     get teachingGroupIds(): string[] {
-        return this._teachingGroupIds
+        return this._teachingGroupIds;
     }
 }
