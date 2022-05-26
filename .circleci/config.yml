@@ -22,12 +22,6 @@ jobs:
           name: install postgresql client
           command: sudo apt install -y postgresql-client
       - run:
-          name: create database user
-          command: sudo psql -U postgres -h localhost -p 5432 -c "CREATE USER postgres;"
-      - run:
-          name: change password
-          command: sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'admin779799';"
-      - run:
           name: create test database
           command: createdb "gicuz" --host localhost --user postgres 
       - run:
