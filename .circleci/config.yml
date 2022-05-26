@@ -22,7 +22,7 @@ jobs:
           name: Install postgresql client
           command: sudo apt install -y postgresql-client
       - run:
-          name: Create test database
+          name: Create gicuz database
           command: createdb "gicuz" --host localhost --user postgres 
       - run:
           name: Run Tests
