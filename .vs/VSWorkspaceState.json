@@ -1,6 +1,7 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.circleci",
     "\\src",
     "\\src\\Application",
     "\\src\\Domain",
@@ -8,6 +9,6 @@
     "\\src\\Infrastructure\\Controllers",
     "\\src\\Infrastructure\\Models"
   ],
-  "SelectedNode": "\\src\\Application\\createCalendarEINA.service.ts",
+  "SelectedNode": "\\src\\Infrastructure\\Models\\teachingGroup.model.ts",
   "PreviewInSolutionExplorer": false
 }
