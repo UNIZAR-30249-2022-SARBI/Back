@@ -1,4 +1,4 @@
-import { dateIsBefore, diffDays } from './dateUtils';
+import { dateIsBefore } from './dateUtils';
 import { INVALID_PERIOD_ENDDATE, INVALID_PERIOD_STARTDATE, PERIOD_OUT_OF_RANGE } from './errorTypes';
 
 export type PeriodProps = {

@@ -39,7 +39,6 @@ export class EditCalendarEINAService {
                 periods.set(PeriodCalendarEINA.SECOND_CONVOCATORY, new Period(secondConvocatory.startDate, secondConvocatory.endDate));
                 calendar = this.updatePeriods(calendar, periods);
                 await this.calendarEINARepository.update(calendar);
-                console.log(calendar)
                 return true;
             } else {
                 return false;

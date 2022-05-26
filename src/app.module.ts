@@ -4,6 +4,7 @@ import { CalendarEINAModule } from './calendarEINA.module';
 import { DayEINAModel } from "./Infrastructure/Models/dayEINA.model";
 import { CalendarEINAModel } from './Infrastructure/Models/calendarEINA.model';
 import { PeriodModel } from './Infrastructure/Models/periods.model';
+import { UserModule } from './user.module';
 
 @Module({
     imports: [SequelizeModule.forRoot({
@@ -18,7 +19,7 @@ import { PeriodModel } from './Infrastructure/Models/periods.model';
         synchronize: true,
         define: { timestamps: false },
         logging: true
-    }), CalendarEINAModule],
+    }), CalendarEINAModule, UserModule],
     controllers: [],
     providers: [],
 })
