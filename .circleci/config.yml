@@ -16,13 +16,13 @@ jobs:
           paths:
             - /home/circleci/.npm
       - run:
-          name: update apt
+          name: Update apt
           command: sudo apt update
       - run:
-          name: install postgresql client
+          name: Install postgresql client
           command: sudo apt install -y postgresql-client
       - run:
-          name: create test database
+          name: Create test database
           command: createdb "gicuz" --host localhost --user postgres 
       - run:
           name: Run Tests
