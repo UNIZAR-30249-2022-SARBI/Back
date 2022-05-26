@@ -33,7 +33,7 @@ export class CreateCalendarEINAService {
             return result ? true : false;
             
         } catch (err) { 
-            console.error(err)
+            //console.error(err)
             return false
         }
     }

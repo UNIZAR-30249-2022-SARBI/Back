@@ -8,6 +8,6 @@
     "\\src\\Infrastructure\\Controllers",
     "\\src\\Infrastructure\\Models"
   ],
-  "SelectedNode": "\\src\\Domain\\calendarEINA.entity.ts",
+  "SelectedNode": "\\src\\Application\\createCalendarEINA.service.ts",
   "PreviewInSolutionExplorer": false
 }
