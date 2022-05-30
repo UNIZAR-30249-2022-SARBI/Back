@@ -17,24 +17,6 @@ export class CalendarEINAModel extends Model {
     @Column({ unique: COURSE_VERSION_CONSTRAINT})
     version: number;
 
- /*   @Column({ type: DataType.DATEONLY })
-    startFirstSemester;
-
-    @Column({ type: DataType.DATEONLY })
-    endFirstSemester;
-
-    @Column({ type: DataType.DATEONLY })
-    startSecondSemester;
-
-    @Column({ type: DataType.DATEONLY })
-    endSecondSemester;
-
-    @Column({ type: DataType.DATEONLY })
-    startSecondConvocatory;
-
-    @Column({ type: DataType.DATEONLY })
-    endSecondConvocatory; */
-
     @HasMany(() => DayEINAModel, CALENDAREINA_ID)
     daysEINA: DayEINAModel[];
     @HasMany(() => PeriodModel, CALENDAREINA_ID)

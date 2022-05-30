@@ -9,6 +9,6 @@
     "\\src\\Infrastructure\\Controllers",
     "\\src\\Infrastructure\\Models"
   ],
-  "SelectedNode": "\\src\\Infrastructure\\Models\\teachingGroup.model.ts",
+  "SelectedNode": "\\src\\Application\\uploadSubject.service.ts",
   "PreviewInSolutionExplorer": false
 }

@@ -1,4 +1,5 @@
 
+
 export class TeachingGroup {
     private _career: string;
     private _course: string;
@@ -21,7 +22,7 @@ export class TeachingGroup {
     constructor(career: string, course: string, code: string, period: string) {
         this._career = career;
         this._course = course;
-        this._code = code;
         this._period = period;
+        this._code = code;
     }
 }

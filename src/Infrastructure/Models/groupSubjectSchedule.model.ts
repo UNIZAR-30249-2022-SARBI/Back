@@ -16,12 +16,5 @@ export class GroupSubjectScheduleModel extends Model {
     @Column
     groupNumber: number;
     
-    @HasOne(() => TeachingGroupModel)
-    teachingGroup: TeachingGroupModel;
 
-    @HasMany(() => ScheduleSlotModel, GROUPSUBJECTSCHEDULE_ID)
-    scheduleSlots: ScheduleSlotModel[];
-
-    @Column
-    subjectIds: string[];
 }

@@ -1,8 +1,14 @@
-import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany } from "sequelize-typescript";
+import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany, BelongsTo, ForeignKey, BelongsToMany } from "sequelize-typescript";
+import { GroupSubjectScheduleModel, GROUPSUBJECTSCHEDULE_ID } from "./groupSubjectSchedule.model";
 
-const GROUP_CODE_CONSTRAINT = 'group_code'
+const GROUP_CODE_CONSTRAINT = 'group_code';
+export const TEACHINGGROUP_ID = 'idTeachingGroupModel';
+
 @Table
 export class TeachingGroupModel extends Model {
+    @PrimaryKey
+    @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4 })
+    id;
 
     @Column
     career: string;
@@ -15,5 +21,6 @@ export class TeachingGroupModel extends Model {
 
     @Column
     period: string;
+
 
 }

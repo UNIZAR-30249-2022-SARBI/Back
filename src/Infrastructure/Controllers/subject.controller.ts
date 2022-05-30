@@ -10,19 +10,23 @@ import {
     Ctx,
     Payload,
 } from '@nestjs/microservices';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadSubjectService } from '../../Application/uploadSubject.service';
+import { respond } from './rabbitmq';
+import * as fs from 'fs';
 
+const FILENAME = 'listado.xlsx';
 @Controller()
-
-export class Subject {
+export class SubjectController {
     constructor(
         private readonly uploadSubjectService: UploadSubjectService,
     ) { }
 
     @MessagePattern('uploadSubject')
-    @UseInterceptors(FileInterceptor('file', { dest: '../../uploads' }))
-    upload(@UploadedFile() file) {
-        this.uploadSubjectService.upload(file);
+    async upload(@Payload() data: any, @Ctx() context: RmqContext): Promise<boolean> {
+        fs.writeFile(FILENAME, Buffer.from(data.record.data), (err)=> console.error(err));
+        let file = fs.createReadStream(FILENAME);
+        await this.uploadSubjectService.upload(file);
+        respond(context);
+        return true;
     }
 }
