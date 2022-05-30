@@ -43,4 +43,16 @@ export class SubjectRepository {
         }
     }
 
+    async findByTeachingGroup(subject: Subject): Promise<Array<Subject>> {
+        let subjects = await this.subjectModel.findAll({
+            where: {
+                teachingGroup: subject.teachingGroupIds
+            }
+        });
+        let arraySubjects: Array<Subject> = subjects.map(subject => {
+            return new Subject(subject.id, subject.name, subject.code, subject.teachingGroupIds);
+        })
+        return arraySubjects;
+    }
+
 }
