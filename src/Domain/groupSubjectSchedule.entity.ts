@@ -27,6 +27,10 @@ export class GroupSubjectSchedule {
         return this._groupType;
     }
 
+    get groupNumber(): number {
+        return this._groupNumber;
+    }
+
     get teachingGroup(): TeachingGroupModel {
         return this._teachingGroup;
     }
