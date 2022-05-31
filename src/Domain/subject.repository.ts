@@ -7,7 +7,7 @@ import { Period } from "./period.value-object";
 import { CalendarEINA, PeriodCalendarEINA } from "./calendarEINA.entity";
 import { PeriodModel } from "../Infrastructure/Models/periods.model";
 import { Sequelize } from "sequelize-typescript";
-import { SubjectModel } from "../Infrastructure/Models/subject.model";
+import { SubjectModel, SubjectTeachingGroupModel } from "../Infrastructure/Models/subject.model";
 import { Subject } from "./subject.entity";
 
 export type DayEINAData = { date: string, state: string, weekDay: number, weekLetter: string, idCalendarEINA; };
@@ -17,41 +17,65 @@ export class SubjectRepository {
     constructor(
         @InjectModel(SubjectModel)
         private subjectModel: typeof SubjectModel,
+        @InjectModel(SubjectTeachingGroupModel)
+        private subjectTeachingGroupModel: typeof SubjectTeachingGroupModel,
         private sequelize: Sequelize,
     ) { }
 
     async save(subject: Subject): Promise<Subject | null> {
+        console.log(subject)
         try {
             const result = await this.sequelize.transaction(async (t) => {
-                const newSubject = await this.subjectModel.create(
+                return await this.subjectModel.upsert(
                     {
                         id: subject.id,
                         code: subject.code,
                         name: subject.name,
                     },
                     { transaction: t }
-                ).catch(err => {
+                ).then(async () => {
+                    for (const id of subject.teachingGroupIds)
+                         await this.subjectTeachingGroupModel.create({
+                            subjectId: subject.id,
+                            groupId: id
+                        },
+                            { transaction: t },
+                        ).catch(err => {
+                            console.error(err);
+                            return null;
+                        })
+                }).catch(err => {
                     // console.error(err);
                     return null;
                 });
-                return newSubject;
+               
             });
             return result;
         } catch (err) {
-            //console.error(err);
+            console.error(err);
             return null;
         }
     }
 
-    async findByTeachingGroup(subject: Subject): Promise<Array<Subject>> {
-        let subjects = await this.subjectModel.findAll({
+    async findByTeachingGroup(teachingGroupId: string): Promise<Array<Subject>> {
+        console.log("id", teachingGroupId);
+
+        let arraySubjects: Array<Subject> = new Array<Subject>();
+        let pairs = await this.subjectTeachingGroupModel.findAll({
             where: {
-                teachingGroup: subject.teachingGroupIds
+                groupId: teachingGroupId
             }
         });
-        let arraySubjects: Array<Subject> = subjects.map(subject => {
-            return new Subject(subject.id, subject.name, subject.code, subject.teachingGroupIds);
-        })
+        console.log("PAIR", pairs);
+
+        for (let pair of pairs) {
+            let subject = await this.subjectModel.findOne({
+                where: {
+                    id: pair.subjectId
+                }
+            });
+            arraySubjects.push(new Subject(subject.id, subject.name, subject.code, null));
+        }
         return arraySubjects;
     }
 

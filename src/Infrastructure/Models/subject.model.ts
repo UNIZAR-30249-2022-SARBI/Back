@@ -1,4 +1,4 @@
-import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany } from "sequelize-typescript";
+import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany, BelongsToMany, ForeignKey } from "sequelize-typescript";
 import { TeachingGroup } from "../../Domain/teachingGroup.value-object";
 import { TeachingGroupModel, TEACHINGGROUP_ID } from "./teachingGroup.model";
 
@@ -15,5 +15,18 @@ export class SubjectModel extends Model {
     @Column({ unique: SUBJECT_CODE_CONSTRAINT})
     code: string;
 
+    @BelongsToMany(() => TeachingGroupModel, () => SubjectTeachingGroupModel)
+    teachingGroupIds: TeachingGroupModel[];
+}
+
+@Table
+export class SubjectTeachingGroupModel extends Model {
+    @ForeignKey(() => SubjectModel)
+    @Column({ type: DataType.UUID})
+    subjectId;
+
+    @ForeignKey(() => TeachingGroupModel)
+    @Column({ type: DataType.UUID })
+    groupId;
 
 }

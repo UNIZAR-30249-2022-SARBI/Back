@@ -5,11 +5,13 @@ import { DayEINAModel } from "./Infrastructure/Models/dayEINA.model";
 import { CalendarEINAModel } from './Infrastructure/Models/calendarEINA.model';
 import { PeriodModel } from './Infrastructure/Models/periods.model';
 import { UserModule } from './user.module';
-import { SubjectModel } from './Infrastructure/Models/subject.model';
+import { SubjectModel, SubjectTeachingGroupModel } from './Infrastructure/Models/subject.model';
 import { TeachingGroupModel } from './Infrastructure/Models/teachingGroup.model';
 import { GroupSubjectScheduleModel } from './Infrastructure/Models/groupSubjectSchedule.model';
 import { SubjectController } from './Infrastructure/Controllers/subject.controller';
 import { SubjectModule } from './subject.module';
+import { ScheduleSlotModel } from './Infrastructure/Models/scheduleSlot.model';
+import { GroupSubjectScheduleModule } from './groupSubjectSchedule.module';
 
 @Module({
     imports: [SequelizeModule.forRoot({
@@ -19,12 +21,12 @@ import { SubjectModule } from './subject.module';
         username: 'postgres',
         password: 'admin779799',
         database: 'gicuz',
-        models: [DayEINAModel, CalendarEINAModel, PeriodModel, TeachingGroupModel, SubjectModel, GroupSubjectScheduleModel],
+        models: [DayEINAModel, CalendarEINAModel, PeriodModel, TeachingGroupModel, SubjectModel, GroupSubjectScheduleModel, ScheduleSlotModel, SubjectTeachingGroupModel],
         autoLoadModels: true,
         synchronize: true,
         define: { timestamps: false },
         logging: true
-    }), CalendarEINAModule, UserModule, SubjectModule],
+    }), CalendarEINAModule, UserModule, SubjectModule, GroupSubjectScheduleModule],
     controllers: [],
     providers: [],
 })

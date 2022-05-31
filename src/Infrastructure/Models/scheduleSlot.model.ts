@@ -1,4 +1,4 @@
-import { Column, Model, PrimaryKey, Table, Unique, DataType, BelongsTo, HasMany } from "sequelize-typescript";
+import { Column, Model, PrimaryKey, Table, Unique, DataType, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript";
 import { GroupSubjectScheduleModel } from "./groupSubjectSchedule.model";
 
 import { GROUPSUBJECTSCHEDULE_ID } from "./groupSubjectSchedule.model";
@@ -19,6 +19,9 @@ export class ScheduleSlotModel extends Model {
     periodicity: string;
 
     @BelongsTo(() => GroupSubjectScheduleModel, GROUPSUBJECTSCHEDULE_ID)
-    idGroupSubjectSchedule;
+    groupSubjectSchedule;
 
+    @ForeignKey(() => GroupSubjectScheduleModel)
+    @Column({ type: DataType.UUID})
+    idGroupSubjectSchedule;
 }

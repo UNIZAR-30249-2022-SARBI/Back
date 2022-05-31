@@ -35,7 +35,7 @@ export class GroupSubjectSchedule {
         return this._teachingGroup;
     }
 
-    get subjectIds(): string[]{
+    get subjectId(): string[]{
         return this._subjectIds;
     }
 

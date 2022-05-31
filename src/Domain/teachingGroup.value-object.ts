@@ -1,10 +1,16 @@
+import { v4 as uuidV4 } from 'uuid';
 
 
 export class TeachingGroup {
+    private readonly _id: string;
     private _career: string;
     private _course: string;
     private _code: string;
     private _period: string;
+
+    get id(): string {
+        return this._id;
+    }
 
     get career(): string {
         return this._career
@@ -19,7 +25,8 @@ export class TeachingGroup {
         return this._period
     }
 
-    constructor(career: string, course: string, code: string, period: string) {
+    constructor(id:string, career: string, course: string, code: string, period: string) {
+        this._id = id ? id : uuidV4();
         this._career = career;
         this._course = course;
         this._period = period;

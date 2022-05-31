@@ -1,7 +1,9 @@
 import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany, BelongsTo, ForeignKey, BelongsToMany } from "sequelize-typescript";
+import { GroupSubjectSchedule } from "../../Domain/groupSubjectSchedule.entity";
 import { GroupSubjectScheduleModel, GROUPSUBJECTSCHEDULE_ID } from "./groupSubjectSchedule.model";
+import { SubjectModel, SubjectTeachingGroupModel } from "./subject.model";
 
-const GROUP_CODE_CONSTRAINT = 'group_code';
+const CODE_PERIOD_CONSTRAINT = 'code_period';
 export const TEACHINGGROUP_ID = 'idTeachingGroupModel';
 
 @Table
@@ -16,11 +18,15 @@ export class TeachingGroupModel extends Model {
     @Column
     course: string;
 
-    @Column({ unique: GROUP_CODE_CONSTRAINT})
+    @Column({ unique: CODE_PERIOD_CONSTRAINT})
     code: string;
 
-    @Column
+    @Column({ unique: CODE_PERIOD_CONSTRAINT })
     period: string;
 
+    @BelongsToMany(() => SubjectModel, () => SubjectTeachingGroupModel)
+    subjectsIds: SubjectModel[];
 
+    @HasMany(() => GroupSubjectScheduleModel, TEACHINGGROUP_ID)
+    groupSubjectSchedules: GroupSubjectSchedule[];
 }

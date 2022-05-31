@@ -8,13 +8,16 @@ import { SubjectModel, SubjectTeachingGroupModel } from "./Infrastructure/Models
 import { SequelizeModule } from "@nestjs/sequelize";
 import { GroupSubjectScheduleModel } from "./Infrastructure/Models/groupSubjectSchedule.model";
 import { SubjectRepository } from "./Domain/subject.repository";
-import { ListSubjectService } from "./Application/listSubject.service";
-import { GroupSubjectScheduleRepository } from "./Domain/groupSubjectSchedule.repository";
 import { ScheduleSlotModel } from "./Infrastructure/Models/scheduleSlot.model";
+import { GroupSubjectScheduleRepository } from "./Domain/groupSubjectSchedule.repository";
+import { GroupSubjectScheduleController } from "./Infrastructure/Controllers/groupSubjectSchedule.controller";
+import { CreateScheduleService } from "./Application/createSchedule.service";
+import { ListTeachingGroupService } from "./Application/listTeachingGroup.service";
+
 
 @Module({
-    imports: [SequelizeModule.forFeature([SubjectModel, TeachingGroupModel, ScheduleSlotModel, GroupSubjectScheduleModel, SubjectTeachingGroupModel])],
-    providers: [UploadSubjectService, SubjectRepository, ListSubjectService, GroupSubjectScheduleRepository],
-    controllers: [SubjectController]
+    imports: [SequelizeModule.forFeature([TeachingGroupModel, ScheduleSlotModel, GroupSubjectScheduleModel, SubjectTeachingGroupModel])],
+    providers: [GroupSubjectScheduleRepository, CreateScheduleService, ListTeachingGroupService],
+    controllers: [GroupSubjectScheduleController]
 })
-export class SubjectModule { }
+export class GroupSubjectScheduleModule { }

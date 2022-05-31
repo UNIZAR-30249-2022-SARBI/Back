@@ -13,12 +13,15 @@ import {
 import { UploadSubjectService } from '../../Application/uploadSubject.service';
 import { respond } from './rabbitmq';
 import * as fs from 'fs';
+import { ListSubjectService } from '../../Application/listSubject.service';
+import { Subject } from '../../Domain/subject.entity';
 
 const FILENAME = 'listado.xlsx';
 @Controller()
 export class SubjectController {
     constructor(
         private readonly uploadSubjectService: UploadSubjectService,
+        private readonly listService: ListSubjectService
     ) { }
 
     @MessagePattern('uploadSubject')
@@ -28,5 +31,12 @@ export class SubjectController {
         await this.uploadSubjectService.upload(file);
         respond(context);
         return true;
+    }
+
+    @MessagePattern('listSubjectsByTeachingGroup')
+    async listByTeachingGroup(@Payload() data: any, @Ctx() context: RmqContext): Promise<Array<Subject>> {
+        let subjects = await this.listService.listByTeachingGroup(data.code, data.period);
+        respond(context);
+        return subjects;
     }
 }

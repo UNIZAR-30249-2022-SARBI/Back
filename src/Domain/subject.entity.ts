@@ -1,3 +1,5 @@
+import { v4 as uuidV4 } from 'uuid';
+
 export class Subject {
     private readonly _id: string;
     private _name: string;
@@ -5,7 +7,7 @@ export class Subject {
     private _teachingGroupIds: string[];
 
     constructor(id: string, name: string, code: string, teachingGroupIds: string[]) {
-        this._id = id;
+        this._id = id ? id : uuidV4();
         this._name = name;
         this._code = code;
         this._teachingGroupIds = teachingGroupIds;
