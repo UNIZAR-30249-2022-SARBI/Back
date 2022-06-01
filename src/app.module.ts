@@ -12,6 +12,7 @@ import { SubjectController } from './Infrastructure/Controllers/subject.controll
 import { SubjectModule } from './subject.module';
 import { ScheduleSlotModel } from './Infrastructure/Models/scheduleSlot.model';
 import { GroupSubjectScheduleModule } from './groupSubjectSchedule.module';
+import { RequestModule } from './request.module';
 
 @Module({
     imports: [SequelizeModule.forRoot({
@@ -26,7 +27,7 @@ import { GroupSubjectScheduleModule } from './groupSubjectSchedule.module';
         synchronize: true,
         define: { timestamps: false },
         logging: true
-    }), CalendarEINAModule, UserModule, SubjectModule, GroupSubjectScheduleModule],
+    }), CalendarEINAModule, UserModule, SubjectModule, GroupSubjectScheduleModule, RequestModule],
     controllers: [],
     providers: [],
 })
