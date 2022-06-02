@@ -11,7 +11,6 @@ import { GroupSubjectScheduleModel } from '../Infrastructure/Models/groupSubject
 import { GroupSubjectScheduleRepository } from '../Domain/groupSubjectSchedule.repository';
 import { ListTeachingGroupService } from './listTeachingGroup.service';
 import { AddScheduleSlotService } from './addScheduleSlot.service';
-import { Periodicity, ScheduleSlot, ScheduleSlotProps } from "src/Domain/scheduleSlot.value-object";
 
 describe('GroupSubjectSchedule Services', () => {
     let uploadService: UploadSubjectService;

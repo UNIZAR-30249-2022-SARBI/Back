@@ -1,24 +1,12 @@
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CalendarEINARepository } from '../Domain/calendarEINA.repository';
 import { Sequelize } from "sequelize-typescript";
-import { UserLoginService } from './userLogin.service';
-import { UploadSubjectService } from './uploadSubject.service';
-import * as fs from 'fs';
-import { SubjectModel, SubjectTeachingGroupModel } from '../Infrastructure/Models/subject.model';
-import { SubjectRepository } from '../Domain/subject.repository';
-import { TeachingGroupModel } from '../Infrastructure/Models/teachingGroup.model';
-import { ScheduleSlotModel } from '../Infrastructure/Models/scheduleSlot.model';
-import { GroupSubjectScheduleModel } from '../Infrastructure/Models/groupSubjectSchedule.model';
-import { GroupSubjectScheduleRepository } from '../Domain/groupSubjectSchedule.repository';
-import { ListSubjectService } from './listSubject.service';
 import { RequestModel } from '../Infrastructure/Models/request.model';
 import { RequestRepository } from '../Domain/request.repository';
 import { ListRequestService } from './listRequest.service';
 import { SendRequestService } from './sendRequest.service';
 import { RespondRequestService } from './respondRequest.service';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { Module, Req } from '@nestjs/common';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 
 const DESC = "____test_request_description___"

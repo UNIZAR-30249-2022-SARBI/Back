@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { TeachingGroupModel } from "src/Infrastructure/Models/teachingGroup.model";
-import { Periodicity, ScheduleSlot, ScheduleSlotProps } from "src/Domain/scheduleSlot.value-object";
+import { Periodicity, ScheduleSlot, ScheduleSlotProps } from "../Domain/scheduleSlot.value-object";
 import { GroupSubjectScheduleRepository } from "../Domain/groupSubjectSchedule.repository";
 import { GroupSubjectSchedule } from "../Domain/groupSubjectSchedule.entity";
 
@@ -14,20 +13,16 @@ export class AddScheduleSlotService {
         try {
             let teachingGroup = await this.gSSRepository.findGroupByCodeAndPeriod(code, period);
             if (teachingGroup) {
-                console.log("TEACHING", teachingGroup)
                 let groupSubject = new GroupSubjectSchedule(null, groupType, groupNumber, teachingGroup, subjectId, null);
                 let slot = new ScheduleSlot(slotProps.startHour, slotProps.endHour, slotProps.weekDay, slotProps.periodicity as Periodicity, slotProps.location);
-                console.log("SLOT", slot, slotProps)
 
                 let foundSchedule = await this.gSSRepository.findByGroupSubjectSchedule(groupSubject)
 
                 if (!foundSchedule) {
                     foundSchedule = groupSubject;
                 }
-                console.log("SCHEDULE", foundSchedule)
 
                 let allSlots = await this.gSSRepository.findAllScheduleSlots();
-                console.log("All", allSlots)
 
                 if (foundSchedule.checkIncompatibility(allSlots, slot)) {
                     foundSchedule.addSlot(slot);

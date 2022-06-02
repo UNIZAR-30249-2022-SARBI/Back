@@ -1,11 +1,5 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { Injectable } from "@nestjs/common";
-import { DayEINAModel } from "../Infrastructure/Models/dayEINA.model";
-import { CalendarEINAModel } from "../Infrastructure/Models/calendarEINA.model";
-import { DayEINA, DayEINAState, WeekLetter } from "./dayEINA.entity";
-import { Period } from "./period.value-object";
-import { CalendarEINA, PeriodCalendarEINA } from "./calendarEINA.entity";
-import { PeriodModel } from "../Infrastructure/Models/periods.model";
 import { Sequelize } from "sequelize-typescript";
 import { SubjectModel, SubjectTeachingGroupModel } from "../Infrastructure/Models/subject.model";
 import { Subject } from "./subject.entity";
@@ -23,7 +17,6 @@ export class SubjectRepository {
     ) { }
 
     async save(subject: Subject): Promise<Subject | null> {
-        console.log(subject)
         try {
             const result = await this.sequelize.transaction(async (t) => {
                 return await this.subjectModel.upsert(
@@ -58,7 +51,6 @@ export class SubjectRepository {
     }
 
     async findByTeachingGroup(teachingGroupId: string): Promise<Array<Subject>> {
-        console.log("id", teachingGroupId);
 
         let arraySubjects: Array<Subject> = new Array<Subject>();
         let pairs = await this.subjectTeachingGroupModel.findAll({
@@ -66,7 +58,6 @@ export class SubjectRepository {
                 groupId: teachingGroupId
             }
         });
-        console.log("PAIR", pairs);
 
         for (let pair of pairs) {
             let subject = await this.subjectModel.findOne({

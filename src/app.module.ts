@@ -8,7 +8,6 @@ import { UserModule } from './user.module';
 import { SubjectModel, SubjectTeachingGroupModel } from './Infrastructure/Models/subject.model';
 import { TeachingGroupModel } from './Infrastructure/Models/teachingGroup.model';
 import { GroupSubjectScheduleModel } from './Infrastructure/Models/groupSubjectSchedule.model';
-import { SubjectController } from './Infrastructure/Controllers/subject.controller';
 import { SubjectModule } from './subject.module';
 import { ScheduleSlotModel } from './Infrastructure/Models/scheduleSlot.model';
 import { GroupSubjectScheduleModule } from './groupSubjectSchedule.module';

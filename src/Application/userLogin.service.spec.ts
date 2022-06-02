@@ -1,7 +1,4 @@
-import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CalendarEINARepository } from '../Domain/calendarEINA.repository';
-import { Sequelize } from "sequelize-typescript";
 import { UserLoginService } from './userLogin.service';
 
 describe('User Services', () => {

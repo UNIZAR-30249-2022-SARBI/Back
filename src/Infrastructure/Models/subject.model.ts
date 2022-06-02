@@ -1,5 +1,4 @@
 import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany, BelongsToMany, ForeignKey } from "sequelize-typescript";
-import { TeachingGroup } from "../../Domain/teachingGroup.value-object";
 import { GroupSubjectScheduleModel } from "./groupSubjectSchedule.model";
 import { TeachingGroupModel, TEACHINGGROUP_ID } from "./teachingGroup.model";
 

@@ -1,15 +1,12 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { Injectable } from "@nestjs/common";
 import { Sequelize } from "sequelize-typescript";
-import { SubjectModel } from "../Infrastructure/Models/subject.model";
-import { Subject } from "./subject.entity";
 import { GroupSubjectSchedule } from "./groupSubjectSchedule.entity";
 import { GroupSubjectScheduleModel } from "../Infrastructure/Models/groupSubjectSchedule.model";
 import { TeachingGroup } from "./teachingGroup.value-object";
 import { Periodicity, ScheduleSlot } from "./scheduleSlot.value-object";
 import { TeachingGroupModel } from "../Infrastructure/Models/teachingGroup.model";
 import { ScheduleSlotModel } from "../Infrastructure/Models/scheduleSlot.model";
-import { WeekDay } from "./dayEINA.entity";
 
 @Injectable()
 export class GroupSubjectScheduleRepository {
@@ -63,7 +60,6 @@ export class GroupSubjectScheduleRepository {
 
     private async createScheduleSlots(slots: Array<ScheduleSlot>, idSchedule, transactionHost): Promise<Boolean | null> {
         try {
-            console.log("SKOTSSS", slots)
             for (const slot of slots) {
                 let scheduleSlot = { startHour: slot.startHour, endHour:slot.endHour,weekDay:slot.weekDay, periodicity: slot.periodicity, location:slot.location, idGroupSubjectSchedule: idSchedule };
                 var newSlot = await this.slotModel.create(scheduleSlot, transactionHost).catch(err => { console.error(err); return null; });

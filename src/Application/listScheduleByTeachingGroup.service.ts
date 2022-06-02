@@ -1,8 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { TeachingGroupModel } from "src/Infrastructure/Models/teachingGroup.model";
-import { Periodicity, ScheduleSlot } from "src/Domain/scheduleSlot.value-object";
+import { ScheduleSlot } from "src/Domain/scheduleSlot.value-object";
 import { GroupSubjectScheduleRepository } from "../Domain/groupSubjectSchedule.repository";
-import { GroupSubjectSchedule } from "../Domain/groupSubjectSchedule.entity";
 
 @Injectable()
 export class ListScheduleByTeachingGroupService {

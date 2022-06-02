@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CalendarEINARepository } from "../Domain/calendarEINA.repository";
 import { Period, PeriodProps } from "../Domain/period.value-object";
 import { CalendarEINA, PeriodCalendarEINA } from "../Domain/calendarEINA.entity";
-import { addOneDay, addWeek, dateBetween, getUTCDate, sortByDate, TOTALWEEKDAY } from "../Domain/dateUtils";
+import { addOneDay, addWeek, getUTCDate, sortByDate, TOTALWEEKDAY } from "../Domain/dateUtils";
 import { DayEINA, DayEINAState, WeekDay, WeekLetter } from '../Domain/dayEINA.entity';
 const CULM_COMMENT = 'Exámenes CULM';
 const SEC_CONV_COMMENT = 'Exámenes 2ª conv';

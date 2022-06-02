@@ -8,6 +8,6 @@
     "\\src\\Infrastructure\\Controllers",
     "\\src\\Infrastructure\\Models"
   ],
-  "SelectedNode": "\\src\\Application\\addScheduleSlot.service.ts",
+  "SelectedNode": "\\src\\user.module.ts",
   "PreviewInSolutionExplorer": false
 }

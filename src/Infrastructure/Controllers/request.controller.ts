@@ -1,8 +1,5 @@
 import {
     Controller,
-    Post,
-    UseInterceptors,
-    UploadedFile,
 } from '@nestjs/common';
 import {
     MessagePattern,

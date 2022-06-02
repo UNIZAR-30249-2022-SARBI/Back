@@ -1,13 +1,6 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { Injectable } from "@nestjs/common";
-import { DayEINAModel } from "../Infrastructure/Models/dayEINA.model";
-import { CalendarEINAModel } from "../Infrastructure/Models/calendarEINA.model";
-import { DayEINA, DayEINAState, WeekLetter } from "./dayEINA.entity";
-import { Period } from "./period.value-object";
-import { CalendarEINA, PeriodCalendarEINA } from "./calendarEINA.entity";
-import { PeriodModel } from "../Infrastructure/Models/periods.model";
 import { Sequelize } from "sequelize-typescript";
-import { SubjectModel, SubjectTeachingGroupModel } from "../Infrastructure/Models/subject.model";
 import { Request } from "./request.entity";
 import { RequestModel } from "../Infrastructure/Models/request.model";
 

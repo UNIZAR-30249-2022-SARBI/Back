@@ -1,8 +1,6 @@
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CalendarEINARepository } from '../Domain/calendarEINA.repository';
 import { Sequelize } from "sequelize-typescript";
-import { UserLoginService } from './userLogin.service';
 import { UploadSubjectService } from './uploadSubject.service';
 import * as fs from 'fs';
 import { SubjectModel, SubjectTeachingGroupModel } from '../Infrastructure/Models/subject.model';

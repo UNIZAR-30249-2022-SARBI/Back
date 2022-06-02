@@ -1,7 +1,7 @@
 import { Period } from "./period.value-object";
 import { DayEINA, DayEINAState, WeekDay, WeekLetter } from './dayEINA.entity';
 import { v4 as uuidV4 } from 'uuid';
-import { addWeek, dateBetween, getUTCDate, sortByDate, TOTALWEEKDAY } from "./dateUtils";
+import { dateBetween } from "./dateUtils";
 import { INVALID_CALENDAREINA_PERIODS, INVALID_COURSE } from "./errorTypes";
 
 

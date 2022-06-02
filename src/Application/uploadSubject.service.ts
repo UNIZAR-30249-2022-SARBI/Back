@@ -1,8 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { CalendarEINARepository } from "../Domain/calendarEINA.repository";
-import { CalendarEINA, PeriodCalendarEINA } from "../Domain/calendarEINA.entity";
-import { DayEINA } from '../Domain/dayEINA.entity';
-import { Period } from "../Domain/period.value-object";
 import { SubjectRepository } from "../Domain/subject.repository";
 import { WorkBook, WorkSheet } from "xlsx";
 import { ReadStream } from "fs";

@@ -63,13 +63,13 @@ export class CalendarEINAController {
     }
 
     @MessagePattern('editCalendarEINA')
-    public async editDayEINA(@Payload() data: any, @Ctx() context: RmqContext): Promise<Boolean> {
+    public async editPeriods(@Payload() data: any, @Ctx() context: RmqContext): Promise<Boolean> {
         const isEdited = await this.editCalendarEINAService.editCalenarEINA(data.periods.firstSemester, data.periods.secondSemester, data.periods.secondConvocatory, data.course, data.version);
         respond(context);
         return isEdited;
     }
     @MessagePattern('editDayEINA')
-    public async editPeriods(@Payload() data: any, @Ctx() context: RmqContext): Promise<Boolean> {
+    public async editDayEINA(@Payload() data: any, @Ctx() context: RmqContext): Promise<Boolean> {
         const isEdited = await this.editCalendarEINAService.editDayEINA(data.day, data.course, data.version);
         respond(context);
         return isEdited;

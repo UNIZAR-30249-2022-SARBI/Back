@@ -1,6 +1,4 @@
 import { Module } from "@nestjs/common";
-import { UserController } from "./Infrastructure/Controllers/user.controller";
-import { UserLoginService } from "./Application/userLogin.service";
 import { UploadSubjectService } from "./Application/uploadSubject.service";
 import { SubjectController } from "./Infrastructure/Controllers/subject.controller";
 import { TeachingGroupModel } from "./Infrastructure/Models/teachingGroup.model";
