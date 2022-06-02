@@ -1,6 +1,7 @@
 import { Column, Model, PrimaryKey, Table, Unique, DataType, HasMany, HasOne, BelongsTo, ForeignKey } from "sequelize-typescript";
 import { TeachingGroupModel, TEACHINGGROUP_ID } from "./teachingGroup.model";
 import { ScheduleSlotModel } from "./scheduleSlot.model";
+import { SubjectModel, SUBJECT_ID } from "./subject.model";
 
 export const GROUPSUBJECTSCHEDULE_ID = 'idGroupSubjectSchedule';
 
@@ -23,10 +24,10 @@ export class GroupSubjectScheduleModel extends Model {
     @Column({ type: DataType.UUID })
     idTeachingGroup;
 
-    @BelongsTo(() => TeachingGroupModel, TEACHINGGROUP_ID)
-    subject: TeachingGroupModel;
+    @BelongsTo(() => SubjectModel, SUBJECT_ID)
+    subject: SubjectModel;
 
-    @ForeignKey(() => TeachingGroupModel)
+    @ForeignKey(() => SubjectModel)
     @Column({ type: DataType.UUID })
     subjectId;
 

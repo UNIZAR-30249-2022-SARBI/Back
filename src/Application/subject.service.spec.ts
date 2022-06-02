@@ -30,7 +30,7 @@ describe('Subject Services', () => {
                 autoLoadModels: true,
                 synchronize: true,
                 define: { timestamps: false },
-                logging: true
+                logging: false
             }), SequelizeModule.forFeature([SubjectModel, SubjectTeachingGroupModel, TeachingGroupModel, ScheduleSlotModel, GroupSubjectScheduleModel])],
             controllers: [],
             providers: [UploadSubjectService, SubjectRepository, GroupSubjectScheduleRepository, ListSubjectService],

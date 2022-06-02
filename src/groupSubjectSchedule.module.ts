@@ -11,13 +11,15 @@ import { SubjectRepository } from "./Domain/subject.repository";
 import { ScheduleSlotModel } from "./Infrastructure/Models/scheduleSlot.model";
 import { GroupSubjectScheduleRepository } from "./Domain/groupSubjectSchedule.repository";
 import { GroupSubjectScheduleController } from "./Infrastructure/Controllers/groupSubjectSchedule.controller";
-import { CreateScheduleService } from "./Application/createSchedule.service";
+import { AddScheduleSlotService } from "./Application/addScheduleSlot.service";
 import { ListTeachingGroupService } from "./Application/listTeachingGroup.service";
+import { RemoveScheduleSlotService } from "./Application/removeScheduleSlot.service";
+import { ListScheduleByTeachingGroupService } from "./Application/listScheduleByTeachingGroup.service";
 
 
 @Module({
     imports: [SequelizeModule.forFeature([TeachingGroupModel, ScheduleSlotModel, GroupSubjectScheduleModel, SubjectTeachingGroupModel])],
-    providers: [GroupSubjectScheduleRepository, CreateScheduleService, ListTeachingGroupService],
+    providers: [GroupSubjectScheduleRepository, AddScheduleSlotService, ListTeachingGroupService, RemoveScheduleSlotService, ListScheduleByTeachingGroupService],
     controllers: [GroupSubjectScheduleController]
 })
 export class GroupSubjectScheduleModule { }

@@ -1,8 +1,6 @@
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CalendarEINARepository } from '../Domain/calendarEINA.repository';
 import { Sequelize } from "sequelize-typescript";
-import { UserLoginService } from './userLogin.service';
 import { UploadSubjectService } from './uploadSubject.service';
 import * as fs from 'fs';
 import { SubjectModel, SubjectTeachingGroupModel } from '../Infrastructure/Models/subject.model';
@@ -12,7 +10,8 @@ import { ScheduleSlotModel } from '../Infrastructure/Models/scheduleSlot.model';
 import { GroupSubjectScheduleModel } from '../Infrastructure/Models/groupSubjectSchedule.model';
 import { GroupSubjectScheduleRepository } from '../Domain/groupSubjectSchedule.repository';
 import { ListTeachingGroupService } from './listTeachingGroup.service';
-import { CreateScheduleService } from './createSchedule.service';
+import { AddScheduleSlotService } from './addScheduleSlot.service';
+import { Periodicity, ScheduleSlot, ScheduleSlotProps } from "src/Domain/scheduleSlot.value-object";
 
 describe('GroupSubjectSchedule Services', () => {
     let uploadService: UploadSubjectService;
@@ -34,7 +33,7 @@ describe('GroupSubjectSchedule Services', () => {
                 logging: false
             }), SequelizeModule.forFeature([SubjectModel, SubjectTeachingGroupModel, TeachingGroupModel, ScheduleSlotModel, GroupSubjectScheduleModel])],
             controllers: [],
-            providers: [ListTeachingGroupService, SubjectRepository, GroupSubjectScheduleRepository, CreateScheduleService, UploadSubjectService],
+            providers: [ListTeachingGroupService, SubjectRepository, GroupSubjectScheduleRepository, AddScheduleSlotService, UploadSubjectService],
         }).compile();
         listService = moduleRef.get<ListTeachingGroupService>(ListTeachingGroupService);
         uploadService = moduleRef.get<UploadSubjectService>(UploadSubjectService);

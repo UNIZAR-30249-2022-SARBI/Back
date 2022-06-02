@@ -6,81 +6,136 @@ import { Subject } from "./subject.entity";
 import { GroupSubjectSchedule } from "./groupSubjectSchedule.entity";
 import { GroupSubjectScheduleModel } from "../Infrastructure/Models/groupSubjectSchedule.model";
 import { TeachingGroup } from "./teachingGroup.value-object";
-import { ScheduleSlot } from "./scheduleSlot.value-object";
+import { Periodicity, ScheduleSlot } from "./scheduleSlot.value-object";
 import { TeachingGroupModel } from "../Infrastructure/Models/teachingGroup.model";
+import { ScheduleSlotModel } from "../Infrastructure/Models/scheduleSlot.model";
+import { WeekDay } from "./dayEINA.entity";
 
 @Injectable()
 export class GroupSubjectScheduleRepository {
     constructor(
         @InjectModel(GroupSubjectScheduleModel)
         private scheduleModel: typeof GroupSubjectScheduleModel,
+        @InjectModel(ScheduleSlotModel)
+        private slotModel: typeof ScheduleSlotModel,
         @InjectModel(TeachingGroupModel)
         private teachingGroupModel: typeof TeachingGroupModel,
         private sequelize: Sequelize,
     ) { }
 
-    async findByTeachingGroup(teachingGroup: TeachingGroup): Promise<Array<GroupSubjectSchedule>> {
-        let groupSubjectSchedules = await this.scheduleModel.findAll({
-            where: {
-                career: teachingGroup.career,
-                course: teachingGroup.course,
-                code: teachingGroup.code,
-                period: teachingGroup.period
-            }
-        });
-        let arrayGroupSubjectSchedule: Array<GroupSubjectSchedule> = groupSubjectSchedules.map(schedule => {
-           
-            return new GroupSubjectSchedule(schedule.id, schedule.groupType, schedule.groupNumber, schedule.teachingGroup, schedule.subjectId, null);
-        })
-        return arrayGroupSubjectSchedule;
-    }
-    /*  let arrayScheduleSlots = schedule.scheduleSlots.map(slot=> new ScheduleSlot(slot.startHour,slot.endHour, slot.weekDay, slot.periodicity));
-     */
-  /*  async findByCode(teachingGroup: TeachingGroup): Promise<GroupSubjectSchedule> {
-        let schedule = await this.scheduleModel.findAll({
-            where: {
-                code: teachingGroup.code
-            }
-        });
-        return new GroupSubjectSchedule(schedule.id, schedule.groupType, schedule.groupNumber, schedule.teachingGroup, schedule.subjectId, null);
-    }*/
-
-    async findBySubjectId(subject: Subject): Promise<Array<GroupSubjectSchedule>> {
-        let groupSubjectSchedules = await this.scheduleModel.findAll({
-            where: {
-                subject: subject.id
-            }
-        });
-        let arrayGroupSubjectSchedule: Array<GroupSubjectSchedule> = groupSubjectSchedules.map(schedule => {
-            return new GroupSubjectSchedule(schedule.id, schedule.groupType, schedule.groupNumber, schedule.teachingGroup, schedule.subjectId, null);
-        })
-        return arrayGroupSubjectSchedule;
-    }
-
-    async save(groupSubjectSchedule: GroupSubjectSchedule): Promise<GroupSubjectSchedule | null> {
+    async save(schedule: GroupSubjectSchedule): Promise<GroupSubjectSchedule | null> {
         try {
             const result = await this.sequelize.transaction(async (t) => {
-                const newGroupSubjectSchedule = await this.scheduleModel.create(
-                    {
-                        groupType: groupSubjectSchedule.groupType,
-                        groupNumber: groupSubjectSchedule.groupNumber,
-                        teachingGroup: groupSubjectSchedule.teachingGroup,
-                        subjectId: groupSubjectSchedule.subjectId,
-                       // scheduleSlots: groupSubjectSchedule.scheduleSlots
-                    },
-                    { transaction: t }
-                ).catch(err => {
-                    // console.error(err);
-                    return null;
-                });
-                return newGroupSubjectSchedule;
+                const transactionHost = { transaction: t };
+                let newSchedule = await this.createSchedule(schedule, transactionHost);
+                if (newSchedule) {
+                    await this.deleteScheduleSlots(schedule.id, t);
+                    await this.createScheduleSlots(schedule.scheduleSlots, schedule.id, transactionHost);
+                    return newSchedule;
+                }
+                return null;
             });
             return result;
         } catch (err) {
-            //console.error(err);
+            console.error(err);
             return null;
         }
     }
+
+    private async createSchedule(schedule: GroupSubjectSchedule, transactionHost): Promise<GroupSubjectSchedule | null> {
+        const newSchedule = await this.scheduleModel.upsert(
+            {
+                id: schedule.id,
+                groupType: schedule.groupType,
+                groupNumber: schedule.groupNumber,
+                idTeachingGroup: schedule.teachingGroup.id,
+                subjectId: schedule.subjectId,
+            },
+            transactionHost
+        ).catch(err => {
+            // console.error(err);
+            return null;
+        });
+        if (newSchedule)
+            return schedule;
+        else return null;
+    }
+
+    private async createScheduleSlots(slots: Array<ScheduleSlot>, idSchedule, transactionHost): Promise<Boolean | null> {
+        try {
+            console.log("SKOTSSS", slots)
+            for (const slot of slots) {
+                let scheduleSlot = { startHour: slot.startHour, endHour:slot.endHour,weekDay:slot.weekDay, periodicity: slot.periodicity, location:slot.location, idGroupSubjectSchedule: idSchedule };
+                var newSlot = await this.slotModel.create(scheduleSlot, transactionHost).catch(err => { console.error(err); return null; });
+            }
+            return true;
+        } catch (err) {
+            // console.error(err);
+            return false;
+        }
+    }
+
+    private async deleteScheduleSlots(idSchedule, transaction): Promise<Boolean> {
+        await this.slotModel.destroy(
+            {
+                where: {
+                    idGroupSubjectSchedule: idSchedule,
+                },
+                transaction: transaction
+            },
+        );
+        return true;
+    }
+
+    async findSlotsByTeachingGroup(teachingGroup: TeachingGroup): Promise<Array<ScheduleSlot>> {
+        let groupSubjectSchedules = await this.scheduleModel.findAll({
+            where: {
+                idTeachingGroup: teachingGroup.id
+            }
+        });
+        let allSlots = Array<ScheduleSlot>()
+        for (let schedule of groupSubjectSchedules) {
+            let slots = await this.slotModel.findAll(
+                {
+                    where: {
+                        idGroupSubjectSchedule: schedule.id
+                    }
+                });
+
+            let arraySlots = slots.map(slot => new ScheduleSlot(slot.startHour, slot.endHour, slot.weekDay, slot.periodicity as Periodicity, slot.location));
+            allSlots.push(...arraySlots)
+        }
+        return allSlots;
+    }
+
+    async findByGroupSubjectSchedule(groupSubject:GroupSubjectSchedule): Promise<GroupSubjectSchedule> {
+        let schedule = await this.scheduleModel.findOne({
+            where: {
+                groupType: groupSubject.groupType,
+                groupNumber: groupSubject.groupNumber,
+                idTeachingGroup: groupSubject.teachingGroup.id,
+                subjectId: groupSubject.subjectId
+            }
+        });
+
+        if (schedule) {
+            let slots = await this.slotModel.findAll({ where: { idGroupSubjectSchedule: schedule.id } })
+            let arraySlots = slots.map(slot => new ScheduleSlot(slot.startHour,slot.endHour, slot.weekDay, slot.periodicity as Periodicity, slot.location))
+            return new GroupSubjectSchedule(schedule.id, schedule.groupType, schedule.groupNumber, groupSubject.teachingGroup, schedule.subjectId, arraySlots);
+        }
+        else
+            return null;
+    }
+   
+    async findAllScheduleSlots(): Promise<Array<ScheduleSlot>> {
+        let slots = await this.slotModel.findAll();
+        let arraySlot: Array<ScheduleSlot> = slots.map(slot => {
+            return new ScheduleSlot(slot.startHour, slot.endHour, slot.weekDay, slot.periodicity as Periodicity, slot.location);
+        });
+        return arraySlot;
+    }
+
+    //Teaching Groups
     async findGroupByCodeAndPeriod(code: string, period: string): Promise<TeachingGroup | null> {
         let teachingGroupModel = await this.teachingGroupModel.findOne({
             where: {

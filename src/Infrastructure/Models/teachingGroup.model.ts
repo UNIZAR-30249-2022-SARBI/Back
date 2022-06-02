@@ -28,5 +28,5 @@ export class TeachingGroupModel extends Model {
     subjectsIds: SubjectModel[];
 
     @HasMany(() => GroupSubjectScheduleModel, TEACHINGGROUP_ID)
-    groupSubjectSchedules: GroupSubjectSchedule[];
+    groupSubjectSchedules: GroupSubjectScheduleModel[];
 }

@@ -1,14 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.circleci",
     "\\src",
     "\\src\\Application",
     "\\src\\Domain",
     "\\src\\Infrastructure",
-    "\\src\\Infrastructure\\Controllers",
-    "\\src\\Infrastructure\\Models"
+    "\\src\\Infrastructure\\Controllers"
   ],
-  "SelectedNode": "\\src\\Application\\uploadSubject.service.ts",
+  "SelectedNode": "\\src\\Application\\sendRequest.service.ts",
   "PreviewInSolutionExplorer": false
 }

@@ -13,7 +13,7 @@ export class ScheduleSlotModel extends Model {
     endHour: string;
 
     @Column
-    weekDay: string;
+    weekDay: number;
 
     @Column
     periodicity: string;
@@ -24,4 +24,7 @@ export class ScheduleSlotModel extends Model {
     @ForeignKey(() => GroupSubjectScheduleModel)
     @Column({ type: DataType.UUID})
     idGroupSubjectSchedule;
+
+    @Column
+    location: string;
 }
