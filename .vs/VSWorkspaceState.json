@@ -5,8 +5,9 @@
     "\\src\\Application",
     "\\src\\Domain",
     "\\src\\Infrastructure",
-    "\\src\\Infrastructure\\Controllers"
+    "\\src\\Infrastructure\\Controllers",
+    "\\src\\Infrastructure\\Models"
   ],
-  "SelectedNode": "\\src\\Application\\sendRequest.service.ts",
+  "SelectedNode": "\\src\\Application\\addScheduleSlot.service.ts",
   "PreviewInSolutionExplorer": false
 }

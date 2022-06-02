@@ -42,12 +42,13 @@ export class RespondRequestService {
 
     async sendEmail(request: Request, respond: string, comment: string) {
         let commentHtml = ''
-        if(comment) commentHtml = '<p>Comentario: ' + comment + '</p>';
+        if (comment) commentHtml = '<p>Comentario: ' + comment + '</p>';
+        let toEmail = request.applicantEmail ? request.applicantEmail : "example@unizar.es";
         await this
             .mailerService
             .sendMail({
                 from: 'gicuz@unizar.es',
-                to: request.applicantEmail, // List of receivers email address
+                to: toEmail, // List of receivers email address
                 subject: 'Respuesta a la petición', // Subject line
                 text: 'Respuesta a la petición', // plaintext body
                 html: '<b>Resolución de la petición</b><p>' + request.description + '</p><p>Resultado: ' + respond + '</p>' + commentHtml, // HTML body content
